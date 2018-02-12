@@ -1,0 +1,45 @@
+{
+"name": "Save Paise Affiliate",
+        "description": "Automatically applies an Affiliate Tracking Id to webpages ensuring that purchases are credited to that Associate.
+        Clicking upon the toolbar icon for this extension opens up the Amazon Deals page, so you can easily access Amazon's Deal of the Deal, Lightning Deals, and other ongoing promotions.
+        Also, when an Amazon page opens, focus is automatically set to the search box, if found, to simplify searching.
+
+        Note:
+        * Currently, clicking the extension's icon opens the www.savepaise.com website which provide details and coupons
+        * We just redirect and or add our affiliate id for the ecommerce sites..
+
+        Disclaimer:
+        * This extension is was not created or endorsed by Amazon or any other affiliate program.
+        * Affiliate programs may have Terms and Conditions that exclude the use of browser extensions.
+        * This extension is not associated with or sponsored by the trademark owner.",
+        "version": "1.0",
+        "manifest_version": 2,
+        "short_name": "Save Paise Affiliate",
+        "background": {
+        "scripts": ["popup.js"]
+        },
+        "browser_action": {
+        "default_icon": "icon.png"
+        },
+        "permissions": [
+                "tabs",
+                "webRequest",
+                "*://flipkart.com/",
+                "*://www.flipkart.com/",
+                "*://amazon.in/",
+                "*://www.amazon.in/",
+                "*://jabong.com/",
+                "*://www.jabong.com/",
+                "*://tatacliq.com/",
+                "*://www.tatacliq.com/",
+                "*://bigbasket.com/",
+                "*://www.bigbasket.com/",
+                "*://swiggy.com/",
+                "*://www.swiggy.com/",
+                "*://limeroad.com/",
+                "*://www.limeroad.com/",
+                "*://shopclues.com/",
+                "*://www.shopclues.com/",
+                "webRequestBlocking"
+        ]
+}
