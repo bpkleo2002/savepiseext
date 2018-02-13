@@ -1,4 +1,15 @@
 var _key = "tag";
+var _trackIdKey = "trackId";
+var _trackIdKeyDefault = "trackIdDefault";
+var _trackIdKeyIn = "trackId.in";
+var _trackIdKeyDefaultIn = "trackIdDefault.in";
+var _trackIdKeyFlipkart = "trackId.flipkart";
+var _trackIdKeyDefaultFlipkart = "trackIdDefault.flipkart";
+
+
+// store default tracking id value
+localStorage[_trackIdKeyDefault] = "";
+localStorage[_trackIdKeyDefaultFlipkart] = "";
 // returns the url with key-value pair added to the parameter string.
 function insertParam(url, key, value) {
     if (url.indexOf('?') != -1) {
@@ -52,8 +63,11 @@ chrome.webRequest.onBeforeRequest.addListener(
         function (details) {
             // only for the top-most window (ignore frames)
             if (window == top) {
-                var trackId = "praveenaa";
+                var trackId = localStorage[_trackIdKeyFlipkart];
                 var _keyFlipkart = "affid";
+                if (!trackId) {
+                    trackId = "praveenaa";
+                }
                 // if the url does not already contain the tracking id
                 if (details.url.search(trackId) == -1 &&
                         details.url.search("/api/") == -1 &&
@@ -78,7 +92,11 @@ chrome.webRequest.onBeforeRequest.addListener(
         function (details) {
             // only for the top-most window (ignore frames)
             if (window == top) {
-                var trackId = "savepaise-21";
+                var trackId = localStorage[_trackIdKey];
+
+                if (!trackId) {
+                    trackId = "savepaise-21";
+                }
 
                 // if the url does not already contain the tracking id
                 if (details.url.search(trackId) == -1 &&
