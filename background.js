@@ -1,15 +1,5 @@
 var _key = "tag";
-var _trackIdKey = "trackId";
-var _trackIdKeyDefault = "trackIdDefault";
-var _trackIdKeyIn = "trackId.in";
-var _trackIdKeyDefaultIn = "trackIdDefault.in";
-var _trackIdKeyFlipkart = "trackId.flipkart";
-var _trackIdKeyDefaultFlipkart = "trackIdDefault.flipkart";
 
-
-// store default tracking id value
-localStorage[_trackIdKeyDefault] = "";
-localStorage[_trackIdKeyDefaultFlipkart] = "";
 // returns the url with key-value pair added to the parameter string.
 function insertParam(url, key, value) {
     if (url.indexOf('?') != -1) {
@@ -50,10 +40,7 @@ chrome.browserAction.onClicked.addListener(
                     {
                         'url': 'http://www.savepaise.com',
                         'selected': true
-                    },
-            function (tab) {
-                // tab opened, further processing takes place in content.js                
-            }
+                    }
             );
         }
 );
@@ -63,11 +50,8 @@ chrome.webRequest.onBeforeRequest.addListener(
         function (details) {
             // only for the top-most window (ignore frames)
             if (window == top) {
-                var trackId = localStorage[_trackIdKeyFlipkart];
                 var _keyFlipkart = "affid";
-                if (!trackId) {
-                    trackId = "praveenaa";
-                }
+                trackId = "praveenaa";
                 // if the url does not already contain the tracking id
                 if (details.url.search(trackId) == -1 &&
                         details.url.search("/api/") == -1 &&
@@ -82,7 +66,8 @@ chrome.webRequest.onBeforeRequest.addListener(
             urls: [
                 "http://www.flipkart.com/*", "https://www.flipkart.com/*",
                 "http://dl.flipkart.com/*", "https://dl.flipkart.com/*"
-            ]
+            ],
+            types: ["main_frame", "sub_frame", "stylesheet", "script", "image", "object", "xmlhttprequest", "other"]
         }, // only run for requests to the following urls
 ['blocking']    // blocking permission necessary in order to perform the redirect
         );
@@ -92,11 +77,7 @@ chrome.webRequest.onBeforeRequest.addListener(
         function (details) {
             // only for the top-most window (ignore frames)
             if (window == top) {
-                var trackId = localStorage[_trackIdKey];
-
-                if (!trackId) {
-                    trackId = "savepaise-21";
-                }
+                trackId = "savepaise-21";
 
                 // if the url does not already contain the tracking id
                 if (details.url.search(trackId) == -1 &&
@@ -109,7 +90,8 @@ chrome.webRequest.onBeforeRequest.addListener(
         },
         {
             urls: [
-                "http://www.amazon.in/*", "https://www.amazon.in/*"]
+                "http://www.amazon.in/*", "https://www.amazon.in/*"],
+            types: ["main_frame", "sub_frame", "stylesheet", "script", "image", "object", "xmlhttprequest", "other"]
         }, // only run for requests to the following urls
 ['blocking']    // blocking permission necessary in order to perform the redirect
         );
@@ -117,24 +99,24 @@ chrome.webRequest.onBeforeRequest.addListener(
 var host = "https://linksredirect.com/?pub_id=22090CL19883&source=linkkit&subid=praveen&url=";
 chrome.webRequest.onBeforeRequest.addListener(
         function (details) {
-            var urls = new URL(details.url);
-            var DomainName = urls.hostname;
-            return {redirectUrl: host + details.url + details.url.match(/^https?:\/\/[^\/]+([\S\s]*)/)[1]};
+            if (window == top) {
+//                var urls = new URL(details.url);
+//                var DomainName = urls.hostname;
+                return {redirectUrl: host + details.url + details.url.match(/^https?:\/\/[^\/]+([\S\s]*)/)[1]};
+            }
         },
         {
             urls: [
-                "*://jabong.com/",
-                "*://www.jabong.com/",
-                "*://tatacliq.com/",
-                "*://www.tatacliq.com/",
-                "*://bigbasket.com/",
-                "*://www.bigbasket.com/",
-                "*://swiggy.com/",
-                "*://www.swiggy.com/",
-                "*://limeroad.com/",
-                "*://www.limeroad.com/",
-                "*://shopclues.com/",
-                "*://www.shopclues.com/"
+                "*://jabong.com/*",
+                "*://www.jabong.com/*",
+                "*://tatacliq.com/*",
+                "*://www.tatacliq.com/*",
+                "*://bigbasket.com/*",
+                "*://www.bigbasket.com/*",
+                "*://limeroad.com/*",
+                "*://www.limeroad.com/*",
+                "*://shopclues.com/*",
+                "*://www.shopclues.com/*"
             ],
             types: ["main_frame", "sub_frame", "stylesheet", "script", "image", "object", "xmlhttprequest", "other"]
         },
